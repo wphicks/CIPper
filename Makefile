@@ -3,19 +3,22 @@ CFLAGS=-g -Wall -std=c99
 PROFFLAGS=-pg -Wall -std=c99
 INCFLAGS=-I.
 
-TARGETS=factorial
+TARGETS=llist
 
 all : $(TARGETS)
 
-factorial: factorial.o main.c
-	$(CC) $(CFLAGS) factorial.o main.c -o factorial
+llist: llist.o llnode.o main.c
+	$(CC) $(CFLAGS) llnode.o llist.o main.c -o llist
 
-factorial.o: factorial.c factorial.h
-	$(CC) $(INCFLAGS) -c factorial.c
+llist.o: llist.c llist.h
+	$(CC) $(INCFLAGS) -c llist.c
+
+llnode.o: llnode.c llnode.h
+	$(CC) $(INCFLAGS) -c llnode.c
 
 % : %.c
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm $(TARGETS)
+	rm $(TARGETS) *.o
 
