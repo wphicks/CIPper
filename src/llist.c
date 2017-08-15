@@ -17,7 +17,7 @@ void destroy_llist(llist * old_list) {
   llnode * cur_node = old_list->head;
   while (cur_node) {
     next_node = cur_node->next;
-    free(cur_node);
+    destroy_llnode(cur_node);
     cur_node = next_node;
   }
   free(old_list);
@@ -45,7 +45,7 @@ void insert_node(llist * cur_list, llnode * new_node, int index) {
 }
 
 int pop_node(llist * cur_list, int index) {
-  int ret_value;
+  int ret_value = 0;
   llnode * prev_node = NULL;
   llnode * cur_node = cur_list->head;
   if (cur_node) {

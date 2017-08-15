@@ -7,6 +7,10 @@ llnode * build_llnode() {
   return new_node;
 }
 
+void destroy_llnode(llnode * old_node) {
+  free(old_node);
+}
+
 void set_data(llnode * node, int data) {
   node->data = data;
 }

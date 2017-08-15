@@ -13,5 +13,6 @@ int main() {
     pop_node(test_list, 5);
     pop_node(test_list, 0);
     print_list(test_list);
+    destroy_llist(test_list);
 }
 
