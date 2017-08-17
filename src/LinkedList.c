@@ -1,32 +1,37 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "llist.h"
-#include "llnode.h"
+#include "LinkedList.h"
+#include "LinkNode.h"
 
-llist * build_llist() {
-  llist * new_list;
-  new_list = malloc(sizeof(llist));
+LinkedList * build_LinkedList() {
+  LinkedList * new_list;
+  new_list = malloc(sizeof(LinkedList));
   new_list->head = NULL;
   new_list->size = 0;
   return new_list;
 }
 
-void destroy_llist(llist * old_list) {
-  llnode * next_node;
-  llnode * cur_node = old_list->head;
+void destroy_LinkedList(LinkedList * old_list) {
+  LinkNode * next_node;
+  LinkNode * cur_node = old_list->head;
   while (cur_node) {
     next_node = cur_node->next;
-    destroy_llnode(cur_node);
+    destroy_LinkNode(cur_node);
     cur_node = next_node;
   }
   free(old_list);
 }
 
-void insert_node(llist * cur_list, llnode * new_node, int index) {
-  llnode * cur_node = cur_list->head;
+void insert_node(LinkedList * cur_list, LinkNode * new_node, int index) {
+  LinkNode * cur_node = cur_list->head;
   if (!cur_node){
     cur_list->head = new_node;
+    return;
+  }
+  if (!index) {
+    cur_list->head = new_node;
+    set_next(new_node, cur_node);
     return;
   }
   while (cur_node && index) {
@@ -44,10 +49,10 @@ void insert_node(llist * cur_list, llnode * new_node, int index) {
   }
 }
 
-int pop_node(llist * cur_list, int index) {
-  int ret_value = 0;
-  llnode * prev_node = NULL;
-  llnode * cur_node = cur_list->head;
+void * pop_list_node(LinkedList * cur_list, int index) {
+  void * ret_value = NULL;
+  LinkNode * prev_node = NULL;
+  LinkNode * cur_node = cur_list->head;
   if (cur_node) {
     ++index;
     do {
@@ -70,29 +75,29 @@ int pop_node(llist * cur_list, int index) {
 }
 
 
-int get_data(llist * cur_list, int index) {
-  llnode * cur_node = cur_list->head;
+void * get_list_item(LinkedList * cur_list, int index) {
+  LinkNode * cur_node = cur_list->head;
   while (cur_node && index) {
     --index;
+    cur_node = cur_node->next;
     if(!index) {
       return cur_node->data;
     }
-    cur_node = cur_node->next;
   }
   return cur_node->data;
 }
 
-void insert_item(llist * cur_list, int data, int index) {
-  llnode * new_node = build_llnode();
+void insert_list_item(LinkedList * cur_list, void * data, int index) {
+  LinkNode * new_node = build_LinkNode();
   set_data(new_node, data);
   insert_node(cur_list, new_node, index);
 }
 
-void print_list(llist * cur_list) {
-  llnode * cur_node = cur_list->head;
+void print_int_list(LinkedList * cur_list) {
+  LinkNode * cur_node = cur_list->head;
   printf("[");
   while (cur_node) {
-    printf("%d", cur_node->data);
+    printf("%d", *((int *) cur_node->data));
     if (cur_node->next) {
       printf(", ");
     }

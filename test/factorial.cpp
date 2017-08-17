@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 extern "C" {
-#include "factorial.h"
+  #include "factorial.h"
 }
 
 TEST(FactorialTest, HandlesZeroInput) {
