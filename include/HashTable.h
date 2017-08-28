@@ -4,13 +4,10 @@
 #define BUCKETSIZE 251
 
 typedef struct {
-  HashList * buckets[BUCKETSIZE];
+  LinkedList * buckets[BUCKETSIZE];
 } HashTable;
 
-typedef struct {
-  char * key;
-  int value;
-} HashPair;
-
-int get_htable_value(HashTable * table, char * key);
-void set_htable_value(HashTable * table, char * key, int value);
+HashTable * build_HashTable();
+void destroy_HashTable(HashTable * table);
+void * get_htable_value(HashTable * table, char * key);
+void set_htable_value(HashTable * table, char * key, void * value);

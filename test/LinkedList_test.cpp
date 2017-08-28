@@ -26,6 +26,16 @@ TEST_F(LinkedListTest, DataTest) {
   }
 }
 
+TEST_F(LinkedListTest, AppendTest) {
+  EXPECT_EQ(nullptr, test_list->head);
+  for (int i = 0; i < 5; ++i) {
+    append_list_item(test_list, (void *) (test_data + i));
+  }
+  for (int i = 0; i < 5; ++i) {
+    EXPECT_EQ(test_data[i], *((int *) get_list_item(test_list, i)));
+  }
+}
+
 TEST_F(LinkedListTest, InsertPopTest) {
   insert_list_item(test_list, (void *) (test_data + 1), 0); /*{1}*/
   insert_list_item(test_list, (void *) (test_data + 3), 1); /*{1, 3}*/
@@ -34,6 +44,16 @@ TEST_F(LinkedListTest, InsertPopTest) {
   insert_list_item(test_list, (void *) (test_data + 4), 4); /*{0, 1, 2, 3, 4}*/
   for (int i = 0; i < 5; ++i) {
     EXPECT_EQ(test_data[i], *((int *) get_list_item(test_list, i)));
+  }
+}
+
+TEST_F(LinkedListTest, ReverseTest) {
+  for (int i = 0; i < 5; ++i) {
+    append_list_item(test_list, (void *) (test_data + i));
+  }
+  reverse_list(test_list);
+  for (int i = 0; i < 5; ++i) {
+    EXPECT_EQ(test_data[4 - i], *((int *) get_list_item(test_list, i)));
   }
 }
 

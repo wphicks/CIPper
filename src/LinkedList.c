@@ -49,6 +49,18 @@ void insert_node(LinkedList * cur_list, LinkNode * new_node, int index) {
   }
 }
 
+void append_node(LinkedList * cur_list, LinkNode * new_node) {
+  LinkNode * cur_node = cur_list-> head;
+  if (!cur_node) {
+    cur_list->head = new_node;
+  } else {
+    while (cur_node->next) {
+      cur_node = get_next(cur_node);
+    }
+    set_next(cur_node, new_node);
+  }
+}
+
 void * pop_list_node(LinkedList * cur_list, int index) {
   void * ret_value = NULL;
   LinkNode * prev_node = NULL;
@@ -93,6 +105,12 @@ void insert_list_item(LinkedList * cur_list, void * data, int index) {
   insert_node(cur_list, new_node, index);
 }
 
+void append_list_item(LinkedList * cur_list, void * data){
+  LinkNode * new_node = build_LinkNode();
+  set_data(new_node, data);
+  append_node(cur_list, new_node);
+}
+
 void print_int_list(LinkedList * cur_list) {
   LinkNode * cur_node = cur_list->head;
   printf("[");
@@ -104,4 +122,25 @@ void print_int_list(LinkedList * cur_list) {
     cur_node = cur_node->next;
   }
   printf("]\n");
+}
+
+LinkNode * reverse_nodes(LinkNode * cur_node, LinkNode * next_node) {
+  LinkNode * end_node;
+  if (next_node->next) {
+    end_node = reverse_nodes(next_node, next_node->next);
+    next_node->next = cur_node;
+    return end_node;
+  } else {
+    next_node->next = cur_node;
+    return next_node;
+  }
+}
+
+void reverse_list(LinkedList * cur_list){
+  LinkNode * old_head = cur_list->head;
+  LinkNode * next_node = old_head->next;
+  if (next_node) {
+    cur_list->head = reverse_nodes(old_head, next_node);
+  }
+  old_head->next = NULL;
 }
